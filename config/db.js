@@ -2,11 +2,19 @@ const { Pool } = require("pg");
 
 const pool = new Pool({
   user: "postgres",
-  host: "localhost",
-  database: "cw",
+  host: "db.xogjqovzwtmmjsfhofpi.supabase.co",
+  database: "postgres",
   password: "ansariafroz",
   port: 5432,
 });
+
+// const pool = new Pool({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "vintagewatch",
+//   password: "ansariafroz",
+//   port: 5432,
+// });
 
 pool.query("SELECT 1", (err, result) => {
   if (err) {
