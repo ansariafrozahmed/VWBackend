@@ -9,8 +9,9 @@ app.use(cors());
 
 app.listen(4000, () => console.log("SERVER RUNNING ON 4000"));
 
-app.post("/api/adduser", (req, res) => {
-  const name = req.body["name"];
+//SignUp Process API
+app.post("/api/signup", (req, res) => {
+  const name = req.body["fullName"];
   const email = req.body["email"];
   const password = req.body["password"];
 
@@ -24,11 +25,11 @@ app.post("/api/adduser", (req, res) => {
     .query(adduserquery)
     .then((response) => {
       console.log("DATA ADDED");
-      console.log(response);
+      // console.log(response);
     })
     .catch((error) => {
       console.log("DATA NOT ADDED");
-      console.log(error);
+      // console.log(error);
     });
 
   console.log(req.body);
