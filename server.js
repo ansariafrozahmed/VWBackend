@@ -18,7 +18,7 @@ app.post("/api/signup", async (req, res) => {
   //Hashing The Password
   const hashedPassword = await bcrypt.hash(password, 10);
   //Query
-  const adduserquery = `INSERT INTO vwuser (vw_name,vw_email,vw_password) VALUES ('${name}','${email}','${hashedPassword}');`;
+  const adduserquery = `INSERT INTO vwuser (name,email,password) VALUES ('${name}','${email}','${hashedPassword}');`;
   //Firing Query
   pool
     .query(adduserquery)
@@ -49,23 +49,26 @@ app.post("/api/signin", async (req, res) => {
   const password = req.body.password;
 
   try {
-    const getUserQuery = "SELECT * FROM vwuser WHERE vw_email = $1";
+    const getUserQuery = "SELECT * FROM vwuser WHERE email = $1";
     const user = await pool.query(getUserQuery, [email]);
 
     if (user.rows.length > 0) {
       const isPasswordValid = await bcrypt.compare(
         password,
-        user.rows[0].vw_password
+        user.rows[0].password
       );
 
       if (isPasswordValid) {
         // Password is valid, send user data (excluding the password) in the response
         const userData = {
-          user_id: user.rows[0].user_id,
-          vw_email: user.rows[0].vw_email,
-          vw_name: user.rows[0].vw_name,
+          id: user.rows[0].id,
+          name: user.rows[0].name,
+          email: user.rows[0].email,
         };
         res.status(200).json(userData);
+        res
+          .status(200)
+          .json({ status: "success", message: "Login successful" });
       } else {
         // Password is invalid
         res.status(401).send("Invalid Password");
