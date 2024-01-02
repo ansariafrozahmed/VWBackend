@@ -70,7 +70,8 @@ app.post("/api/signin", async (req, res) => {
       name: userResult.rows[0].name,
       email: userResult.rows[0].email,
     };
-    res.status(200).send(userData);
+
+    res.status(200).json({ userData });
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
