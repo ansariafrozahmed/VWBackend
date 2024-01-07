@@ -69,6 +69,7 @@ app.post("/api/signin", async (req, res) => {
       id: userResult.rows[0].id,
       name: userResult.rows[0].name,
       email: userResult.rows[0].email,
+      role: userResult.rows[0].role,
     };
 
     res.status(200).json({ userData });
